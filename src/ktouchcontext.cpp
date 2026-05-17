@@ -62,9 +62,13 @@ KTouchContext::~KTouchContext()
 QString KTouchContext::keyboardLayoutName() const
 {
 #ifdef KTOUCH_BUILD_WITH_X11
-    return X11Helper::getCurrentLayout().toString();
+    QString detected = X11Helper::getCurrentLayout().toString();
+    qDebug() << "ktouch X11 detected layout " << detected << "and forced to us";
+    detected = QStringLiteral("us");
+    return detected;
 #else
-    return "unknown";
+    qDebug() << "ktouch non X11 layout and forced to us";
+    return QStringLiteral("us");
 #endif
 }
 
